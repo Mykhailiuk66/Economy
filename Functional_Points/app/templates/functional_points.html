@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functional Points</title>
+
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/styles.css') }} ">
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Functional Points</h1>
+        <hr>
+        <h3>Кількість функціональних точок: {{ num }}</h3>
+        <h3>VAF: {{ VAF }}</h3>
+        <h3>AFP: {{ AFP }}</h3>
+        <h3>V: {{ V }}</h3>
+        <h3>Трудовитрати: {{ T }}</h3>
+        <hr><br>
+
+        <form method="post" class="form">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Measure</td>
+                        <td>Simple</td>
+                        <td>Average</td>
+                        <td>Complex</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, val in dict_input.items() %}
+                        <tr>
+                            <td>{% for k, v in name.items() %} {% if key == k %} {{ v }} {% endif %} {% endfor %}</td>
+                            {% for v in val %}
+                            <td>
+                                <input type="number" name="{{ v }}">
+                            </td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br><hr><br>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Factor environment</td>
+                        <td>0</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                        <td>5</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, val in dict_factor_environment.items() %}
+                        <tr>
+                            {% for k, v in dict_name_factor_environment.items() %}
+                                {% if k == key %} <td>{{ v }}</td> {% endif %}
+                            {% endfor %}
+                            {% for v in val %}
+                                <td><input type="radio" name="{{ key }}" value="{{ v }}" {% if v == 0 %} checked {% endif %}></td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br><hr><br>
+            <select name="lang_coef">
+                {% for key, val in dict_language_ratio.items() %}
+                    <option value="{{ val.1 }}">{{ val.0 }}</option>
+                {% endfor %}
+            </select>
+            <p></p>
+            <div>
+                <div>
+                    <p>Organic: <input type="radio" name="basic" value="organic"></p>
+                    <p>Semi distributed: <input type="radio" name="basic" value="semi_distributed"></p>
+                    <p>Built in: <input type="radio" name="basic" value="built_in"></p>
+                </div>
+            </div>
+            <hr><br>
+            <input type="submit" value="Calculate">
+        </form>
+        
+    </div>
+
+</body>
+</html>
